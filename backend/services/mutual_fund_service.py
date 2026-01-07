@@ -537,12 +537,22 @@ class MutualFundService:
                     Price.asset_id == holding.asset_id
                 ).order_by(Price.price_date.desc()).first()
                 
-                # If invested_amount is not set, try to calculate from transactions
-                if not holding.invested_amount or holding.invested_amount == 0:
+                # Always recalculate invested_amount from transactions if transactions exist
+                # This ensures accuracy, especially for ETFs imported from CAS
+                transactions_exist = self.db.query(Transaction).filter(
+                    Transaction.asset_id == holding.asset_id
+                ).first() is not None
+                
+                if transactions_exist:
                     invested = self._calculate_invested_from_transactions(holding.asset_id)
                     if invested > 0:
-                        holding.invested_amount = invested
-                        needs_commit = True
+                        # Only update if the calculated value is different (to avoid unnecessary commits)
+                        if not holding.invested_amount or abs(float(holding.invested_amount or 0) - invested) > 0.01:
+                            holding.invested_amount = invested
+                            needs_commit = True
+                elif not holding.invested_amount or holding.invested_amount == 0:
+                    # If no transactions, keep existing or set to 0
+                    pass
                 
                 # Update current value from latest NAV if available
                 # BUT: Only update if current_value is not already set from CAS import
@@ -559,9 +569,8 @@ class MutualFundService:
                         needs_commit = True
                         logger.info(f"Updated current_value from NAV for {holding.asset.name}")
                 
-                # Calculate unrealized gain if we have both invested and current value
-                # BUT: Only calculate if not already set from CAS import
-                #      to avoid overwriting accurate CAS gain values
+                # Always recalculate unrealized gain if we have both invested and current value
+                # This ensures accuracy, especially after recalculating invested_amount
                 if holding.invested_amount and holding.current_value:
                     invested = float(holding.invested_amount)
                     current = float(holding.current_value)
@@ -570,13 +579,11 @@ class MutualFundService:
                         new_unrealized_gain = current - invested
                         new_unrealized_pct = (new_unrealized_gain / invested) * 100
                         
-                        # Only update if unrealized_gain is not set (NULL)
-                        # If it's already set (from CAS), trust that value
-                        if holding.unrealized_gain is None:
-                            holding.unrealized_gain = new_unrealized_gain
-                            holding.unrealized_gain_percentage = new_unrealized_pct
-                            needs_commit = True
-                            logger.info(f"Calculated unrealized gain for {holding.asset.name}")
+                        # Always update to ensure accuracy
+                        holding.unrealized_gain = new_unrealized_gain
+                        holding.unrealized_gain_percentage = new_unrealized_pct
+                        needs_commit = True
+                        logger.info(f"Calculated unrealized gain for {holding.asset.name}: {new_unrealized_gain} ({new_unrealized_pct:.2f}%)")
                 
                 holding_dict = holding.to_dict()
                 holding_dict['asset'] = holding.asset.to_dict()
@@ -910,9 +917,12 @@ class MutualFundService:
                         Price.asset_id == holding.asset_id
                     ).order_by(Price.price_date.desc()).first()
                     
-                    # Calculate current value
+                    # Calculate current value (preserve existing if set, otherwise use NAV)
                     current_value = None
-                    if latest_price and holding.quantity:
+                    if holding.current_value:
+                        # Preserve existing current_value (e.g., from CAS import)
+                        current_value = float(holding.current_value)
+                    elif latest_price and holding.quantity:
                         current_value = float(holding.quantity) * float(latest_price.price)
                     
                     # Update holding
@@ -1079,11 +1089,14 @@ class MutualFundService:
                 holding.current_value = value
                 if cost:
                     holding.invested_amount = cost
-                # If cost is None and invested_amount is not set, calculate from transactions
-                elif not holding.invested_amount or holding.invested_amount == 0:
+                else:
+                    # Always recalculate from transactions if cost is not provided
                     calculated = self._calculate_invested_from_transactions(asset.asset_id)
                     if calculated > 0:
                         holding.invested_amount = calculated
+                    elif not holding.invested_amount or holding.invested_amount == 0:
+                        # If no transactions found, keep existing or set to 0
+                        holding.invested_amount = holding.invested_amount or 0
                 logger.info(f"Updated existing holding for {name}")
             else:
                 # Create new holding

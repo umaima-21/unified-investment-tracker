@@ -1,10 +1,12 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Skeleton } from '@/components/ui/skeleton'
+import { Button } from '@/components/ui/button'
 import { endpoints, api } from '@/lib/api'
 import { formatCurrency, formatPercentage } from '@/lib/utils'
-import { AlertCircle, LineChart } from 'lucide-react'
+import { AlertCircle, LineChart, RefreshCw } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { useToast } from '@/components/ui/use-toast'
 
 type Holding = {
   holding_id: string
@@ -30,6 +32,9 @@ const isEtfHolding = (holding: Holding) => {
 }
 
 export function ETFsPage() {
+  const { toast } = useToast()
+  const queryClient = useQueryClient()
+  
   const { data: holdings, isLoading, error } = useQuery<Holding[]>({
     queryKey: ['etfs', 'holdings'],
     queryFn: async () => {
@@ -37,6 +42,27 @@ export function ETFsPage() {
       return data || []
     },
     retry: 1,
+  })
+
+  const recalculateMutation = useMutation({
+    mutationFn: async () => {
+      const { data } = await api.post(endpoints.mutualFunds.recalculate)
+      return data
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['etfs', 'holdings'] })
+      toast({
+        title: 'Success',
+        description: 'Holdings recalculated successfully. Invested amounts and returns have been updated.',
+      })
+    },
+    onError: (error: any) => {
+      toast({
+        title: 'Error',
+        description: error.response?.data?.detail || 'Failed to recalculate holdings',
+        variant: 'destructive',
+      })
+    },
   })
 
   const etfHoldings = (Array.isArray(holdings) ? holdings : []).filter(isEtfHolding).map((holding) => {
@@ -87,14 +113,24 @@ export function ETFsPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
-          <LineChart className="h-6 w-6 text-emerald-600" />
-          ETFs
-        </h1>
-        <p className="text-muted-foreground">
-          Exchange Traded Funds & demat mutual fund units
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
+            <LineChart className="h-6 w-6 text-emerald-600" />
+            ETFs
+          </h1>
+          <p className="text-muted-foreground">
+            Exchange Traded Funds & demat mutual fund units
+          </p>
+        </div>
+        <Button
+          onClick={() => recalculateMutation.mutate()}
+          disabled={recalculateMutation.isPending}
+          variant="outline"
+        >
+          <RefreshCw className={`mr-2 h-4 w-4 ${recalculateMutation.isPending ? 'animate-spin' : ''}`} />
+          Recalculate Holdings
+        </Button>
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
