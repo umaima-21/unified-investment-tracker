@@ -176,6 +176,10 @@ class LiquidService:
                 json_path = project_root / "data" / "liquid.json"
             else:
                 json_path = Path(json_path)
+                # If path is relative and doesn't exist, try resolving from project root
+                if not json_path.exists() and not json_path.is_absolute():
+                    project_root = Path(__file__).parent.parent.parent
+                    json_path = project_root / json_path
             
             logger.info(f"Attempting to import liquid accounts from: {json_path}")
             
@@ -183,13 +187,21 @@ class LiquidService:
                 logger.error(f"JSON file not found: {json_path}")
                 return {
                     "status": "error",
-                    "message": f"JSON file not found: {json_path}"
+                    "message": f"JSON file not found: {json_path}. Please ensure the file exists."
                 }
             
-            with open(json_path, 'r') as f:
+            with open(json_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
             
-            logger.info(f"Loaded JSON data with keys: {data.keys()}")
+            logger.info(f"Loaded JSON data with keys: {list(data.keys())}")
+            
+            # Check if this is a CAS API file (which doesn't have liquid data)
+            if "cas_api.json" in str(json_path) or ("demat_accounts" in data and "liquid" not in data):
+                logger.warning("CAS API JSON file detected, but it doesn't contain liquid account data")
+                return {
+                    "status": "error",
+                    "message": "CAS API JSON files don't contain liquid account data. Please use data/liquid.json file instead, or ensure your JSON file has a 'liquid' key with 'accounts' array."
+                }
             
             liquid_data = data.get("liquid", {})
             accounts = liquid_data.get("accounts", [])
@@ -197,10 +209,17 @@ class LiquidService:
             logger.info(f"Found {len(accounts)} liquid accounts in JSON")
             
             if not accounts:
-                return {
-                    "status": "error",
-                    "message": "No liquid accounts found in JSON file"
-                }
+                # Provide more helpful error message
+                if "liquid" not in data:
+                    return {
+                        "status": "error",
+                        "message": f"No 'liquid' key found in JSON file. Expected structure: {{'liquid': {{'accounts': [...]}}}}. Found keys: {list(data.keys())}"
+                    }
+                else:
+                    return {
+                        "status": "error",
+                        "message": "No liquid accounts found in the 'accounts' array. Please ensure the JSON file has at least one account in liquid.accounts."
+                    }
             
             imported_count = 0
             skipped_count = 0
@@ -210,16 +229,20 @@ class LiquidService:
                 try:
                     # Check if already exists
                     account_number = account.get("account_number", "")
-                    existing = (
-                        self.db.query(Asset)
-                        .filter(
-                            and_(
-                                Asset.symbol == account_number,
-                                Asset.extra_data['is_liquid'].astext == 'true'
-                            )
-                        )
-                        .first()
-                    )
+                    if not account_number:
+                        logger.warning(f"Skipping account with no account_number: {account.get('account_name')}")
+                        errors.append(f"Account {account.get('account_name')} has no account_number")
+                        continue
+                    
+                    # Query for existing liquid account with same account number
+                    # We need to check both symbol and extra_data.is_liquid
+                    all_assets = self.db.query(Asset).filter(Asset.symbol == account_number).all()
+                    existing = None
+                    for asset in all_assets:
+                        extra_data = asset.extra_data or {}
+                        if extra_data.get("is_liquid") == True:
+                            existing = asset
+                            break
                     
                     if existing:
                         logger.info(f"Liquid account {account_number} already exists, skipping")

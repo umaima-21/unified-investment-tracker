@@ -1,0 +1,69 @@
+{
+  "insurance_policies": [
+    {
+      "policy_number": "Jeevan Rakshak (Plan-827)",
+      "name": "Jeevan Rakshak (Plan-827) - Abbas Petiwala",
+      "description": "Jeevan Rakshak (Plan-827)Abbas Petiwala",
+      "premium": 10100.00,
+      "premium_frequency": "yearly",
+      "annual_premium": 10100.00,
+      "sum_assured": 200000.00,
+      "amount_on_maturity": null,
+      "date_of_investment": "2014-10-21",
+      "date_of_maturity": "2029-10-21",
+      "duration_years": 15,
+      "type": "Moneyback",
+      "nominee": "Huseini (100%)",
+      "comments": null
+    },
+    {
+      "policy_number": "0593544461",
+      "name": "Bajaj Alliance 0593544461",
+      "description": "Term Policy (1Cr) Total Premium - INR 6L over a period of 5 years Premium - 12500 monthly",
+      "premium": 12500.00,
+      "premium_frequency": "monthly",
+      "annual_premium": 150000.00,
+      "sum_assured": 10000000.00,
+      "amount_on_maturity": null,
+      "date_of_investment": "2024-03-21",
+      "date_of_maturity": "2067-03-21",
+      "duration_years": 85,
+      "type": "Term",
+      "nominee": "Sarah",
+      "comments": null
+    },
+    {
+      "policy_number": "9264512",
+      "name": "India Post Postal Life Insurance(PLI)",
+      "description": "Yearly premium - INR 43500 Policy term 12 years",
+      "premium": 43500.00,
+      "premium_frequency": "yearly",
+      "annual_premium": 43500.00,
+      "sum_assured": 500000.00,
+      "amount_on_maturity": 812000.00,
+      "date_of_investment": "2024-02-23",
+      "date_of_maturity": "2036-03-23",
+      "duration_years": 12,
+      "type": "Moneyback",
+      "nominee": "Sarah (50%)",
+      "comments": null
+    },
+    {
+      "policy_number": null,
+      "name": "L&T Technology Services Term Life Insurance",
+      "description": "Term life policy from L&T Technology Services - 75 lakhs sum assured",
+      "premium": 700.00,
+      "premium_frequency": "monthly",
+      "annual_premium": 8400.00,
+      "sum_assured": 7500000.00,
+      "amount_on_maturity": null,
+      "date_of_investment": null,
+      "date_of_maturity": null,
+      "duration_years": null,
+      "type": "Term",
+      "nominee": null,
+      "comments": null
+    }
+  ]
+}
+

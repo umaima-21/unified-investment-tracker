@@ -20,6 +20,9 @@ class AssetType(str, enum.Enum):
     FIXED_DEPOSIT = "FD"
     PPF = "PPF"
     EPF = "EPF"
+    UNLISTED = "UNLISTED"
+    INSURANCE = "INSURANCE"
+    OTHER = "OTHER"
 
 
 class Asset(Base):
@@ -75,6 +78,7 @@ class Asset(Base):
             "exchange": self.exchange,
             "plan_type": self.plan_type,
             "option_type": self.option_type,
+            "extra_data": self.extra_data,  # Include extra_data for liquid accounts, PPF, EPF, etc.
             "created_at": self.created_at.isoformat() if self.created_at else None,
             "updated_at": self.updated_at.isoformat() if self.updated_at else None,
         }

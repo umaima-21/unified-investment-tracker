@@ -1,0 +1,17 @@
+{
+  "fixed_deposits": [
+    {
+      "name": "Shriram Finance FD",
+      "bank": "Shriram Finance Limited",
+      "scheme": "CUMULATIVE SCHEME - 30 MONTHS",
+      "principal": 600000.00,
+      "interest_rate": 8.04,
+      "start_date": "2023-11-03",
+      "maturity_date": "2026-05-03",
+      "maturity_value": 732540.00,
+      "current_value": 718604.19,
+      "compounding_frequency": "quarterly"
+    }
+  ]
+}
+

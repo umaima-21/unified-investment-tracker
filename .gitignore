@@ -58,9 +58,10 @@ desktop.ini
 uploads/
 cas_files/
 temp/
+backend/temp/
 
 # Data files (may contain sensitive information)
-data/
+# data/
 
 # Test Coverage
 .coverage

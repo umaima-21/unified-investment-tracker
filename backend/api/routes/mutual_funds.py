@@ -390,6 +390,7 @@ async def auto_import_cas_json(db: Session = Depends(get_db)):
         from pathlib import Path
         from services.mutual_fund_service import MutualFundService
         from services.stock_service import StockService
+        from services.unlisted_shares_service import UnlistedSharesService
         
         # Look for cas_api.json in data folder
         data_file = Path("data/cas_api.json")
@@ -629,6 +630,19 @@ async def auto_import_cas_json(db: Session = Depends(get_db)):
                         logger.error(f"Failed to import demat MF {mf.get('name')}: {e}")
                         stats['errors'].append(f"Error importing ETF {mf.get('name')}: {str(e)}")
         
+        # Import unlisted shares
+        if 'unlisted_shares' in cas_data:
+            logger.info(f"Found {len(cas_data['unlisted_shares'])} unlisted shares to import")
+            unlisted_service = UnlistedSharesService(db)
+            result = unlisted_service.import_from_json(str(data_file))
+            
+            if result.get('success'):
+                stats['unlisted_shares_imported'] = result.get('unlisted_shares_imported', 0)
+                logger.info(f"Imported {stats['unlisted_shares_imported']} unlisted shares")
+            else:
+                logger.warning(f"Failed to import unlisted shares: {result.get('message')}")
+                stats['errors'].append(f"Unlisted shares import: {result.get('message')}")
+        
         logger.info(f"Auto-import completed: {stats}")
         stats['success'] = True
         stats['message'] = f"Successfully imported data from cas_api.json"
@@ -641,7 +655,8 @@ async def auto_import_cas_json(db: Session = Depends(get_db)):
             'error': str(e),
             'mutual_funds_imported': 0,
             'equities_imported': 0,
-            'demat_mf_imported': 0
+            'demat_mf_imported': 0,
+            'unlisted_shares_imported': 0
         }
 
 

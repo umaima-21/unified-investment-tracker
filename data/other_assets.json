@@ -1,0 +1,16 @@
+{
+  "other_assets": [
+    {
+      "name": "Investment with Swopnajeet Mohapatra",
+      "amount_invested": 500000,
+      "interest": 30,
+      "date_of_investment": "2026-01-01",
+      "returns": 150000,
+      "expected_returns_date": "2026-12-31",
+      "lock_in": "6 months",
+      "lock_in_end_date": "2026-06-30",
+      "terms": "30% pro-rata"
+    }
+  ]
+}
+

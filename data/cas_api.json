@@ -1,0 +1,1120 @@
+{
+    "demat_accounts": [
+      {
+        "additional_info": {
+          "linked_pans": [
+            "ADXXXXXX3B"
+          ]
+        },
+        "bo_id": "IN30290247224760",
+        "client_id": "47224760",
+        "demat_type": "NSDL",
+        "dp_id": "IN302902",
+        "dp_name": "ICICI BANK LIMITED",
+        "holdings": {
+          "aifs": [],
+          "corporate_bonds": [],
+          "demat_mutual_funds": [
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null
+              },
+              "isin": "INF109KC16I6",
+              "name": "ICICI PRUDENTIAL NIFTY IT ETF",
+              "transactions": [],
+              "units": 1000,
+              "value": 41056.9
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null
+              },
+              "isin": "INF204KB17I5",
+              "name": "NIPPON INDIA  ETF GOLD BeES",
+              "transactions": [
+                {
+                  "additional_info": {
+                    "credit": 25,
+                    "debit": 0,
+                    "order_no": "81000056801076",
+                    "stamp_duty": 0
+                  },
+                  "amount": 2614.44,
+                  "balance": 761,
+                  "date": "2025-11-06",
+                  "description": "By CM ICICI SECURITIES LIMITED, T+1 NORMAL / 2025210",
+                  "dividend_rate": null,
+                  "nav": 104.58,
+                  "type": "PURCHASE",
+                  "units": 25
+                },
+                {
+                  "additional_info": {
+                    "credit": 24,
+                    "debit": 0,
+                    "order_no": "81000056963936",
+                    "stamp_duty": 0
+                  },
+                  "amount": 2509.87,
+                  "balance": 785,
+                  "date": "2025-11-12",
+                  "description": "By CM ICICI SECURITIES LIMITED, T+1 NORMAL / 2025214",
+                  "dividend_rate": null,
+                  "nav": 104.58,
+                  "type": "PURCHASE",
+                  "units": 24
+                },
+                {
+                  "additional_info": {
+                    "credit": 24,
+                    "debit": 0,
+                    "order_no": "81000001858827",
+                    "stamp_duty": 0
+                  },
+                  "amount": 2509.87,
+                  "balance": 809,
+                  "date": "2025-11-19",
+                  "description": "By Inter Depository transfer CDS / 1100001100005652",
+                  "dividend_rate": null,
+                  "nav": 104.58,
+                  "type": "PURCHASE",
+                  "units": 24
+                }
+              ],
+              "units": 809,
+              "value": 84603.44
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null
+              },
+              "isin": "INF204KB14I2",
+              "name": "NIPPON INDIA ETF NIFTY 50  BeES",
+              "transactions": [
+                {
+                  "additional_info": {
+                    "credit": 0,
+                    "debit": 43,
+                    "order_no": "10000042530477",
+                    "stamp_duty": 0
+                  },
+                  "amount": 0,
+                  "balance": 0,
+                  "date": "2025-11-03",
+                  "description": "To ICICI SECURITIES LIMITED,eDIS / Block Mechanism / 2025209",
+                  "dividend_rate": null,
+                  "nav": 0,
+                  "type": "REDEMPTION",
+                  "units": 43
+                },
+                {
+                  "additional_info": {
+                    "credit": 43,
+                    "debit": 0,
+                    "order_no": "10000042530477",
+                    "stamp_duty": 0
+                  },
+                  "amount": 0,
+                  "balance": 43,
+                  "date": "2025-11-03",
+                  "description": "By eDIS / Block Mechanism",
+                  "dividend_rate": null,
+                  "nav": 0,
+                  "type": "PURCHASE",
+                  "units": 43
+                },
+                {
+                  "additional_info": {
+                    "credit": 0,
+                    "debit": 43,
+                    "order_no": "1058702864",
+                    "stamp_duty": 0
+                  },
+                  "amount": 0,
+                  "balance": 0,
+                  "date": "2025-11-04",
+                  "description": "To ICICI SECURITIES LIMITED,eDIS / Block Mechanism / 2025209 Initiated by Client (Electronic Instruction-Other)",
+                  "dividend_rate": null,
+                  "nav": 0,
+                  "type": "REDEMPTION",
+                  "units": 43
+                }
+              ],
+              "units": 0,
+              "value": 0
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null
+              },
+              "isin": "INF204KB1V68",
+              "name": "NIPPON INDIA ETF NIFTY MIDCAP 150--",
+              "transactions": [],
+              "units": 52,
+              "value": 12001.06
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null
+              },
+              "isin": "INF204KC1402",
+              "name": "NIPPON INDIA SILVER ETF",
+              "transactions": [
+                {
+                  "additional_info": {
+                    "credit": 17,
+                    "debit": 0,
+                    "order_no": "81000056714726",
+                    "stamp_duty": 0
+                  },
+                  "amount": 2669.15,
+                  "balance": 253,
+                  "date": "2025-11-03",
+                  "description": "By CM ICICI SECURITIES LIMITED, T+1 NORMAL / 2025208",
+                  "dividend_rate": null,
+                  "nav": 157.01,
+                  "type": "PURCHASE",
+                  "units": 17
+                },
+                {
+                  "additional_info": {
+                    "credit": 17,
+                    "debit": 0,
+                    "order_no": "81000056904631",
+                    "stamp_duty": 0
+                  },
+                  "amount": 2669.15,
+                  "balance": 270,
+                  "date": "2025-11-10",
+                  "description": "By CM ICICI SECURITIES LIMITED, T+1 NORMAL / 2025212",
+                  "dividend_rate": null,
+                  "nav": 157.01,
+                  "type": "PURCHASE",
+                  "units": 17
+                },
+                {
+                  "additional_info": {
+                    "credit": 16,
+                    "debit": 0,
+                    "order_no": "81000057058661",
+                    "stamp_duty": 0
+                  },
+                  "amount": 2512.14,
+                  "balance": 286,
+                  "date": "2025-11-17",
+                  "description": "By CM ICICI SECURITIES LIMITED, T+1 NORMAL / 2025217",
+                  "dividend_rate": null,
+                  "nav": 157.01,
+                  "type": "PURCHASE",
+                  "units": 16
+                },
+                {
+                  "additional_info": {
+                    "credit": 17,
+                    "debit": 0,
+                    "order_no": "81000001879484",
+                    "stamp_duty": 0
+                  },
+                  "amount": 2669.15,
+                  "balance": 303,
+                  "date": "2025-11-24",
+                  "description": "By Inter Depository transfer CDS / 1100001100005652",
+                  "dividend_rate": null,
+                  "nav": 157.01,
+                  "type": "PURCHASE",
+                  "units": 17
+                }
+              ],
+              "units": 303,
+              "value": 47573.66
+            }
+          ],
+          "equities": [
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "NOT LISTED"
+              },
+              "isin": "INE441A01026",
+              "name": "ASIAN ELECTRONICS LIMITED",
+              "transactions": [],
+              "units": 300,
+              "value": 1500
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "BANKINDIA.NSE"
+              },
+              "isin": "INE084A01016",
+              "name": "BANK OF INDIA",
+              "transactions": [],
+              "units": 10,
+              "value": 1471.4
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "BBOX.NSE"
+              },
+              "isin": "INE676A01027",
+              "name": "BLACK BOX LIMITED",
+              "transactions": [],
+              "units": 22,
+              "value": 11743.6
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "NOT LISTED"
+              },
+              "isin": "INE177B01032",
+              "name": "CAPGEMINI TECHNOLOGY, SERVICES INDIA LIMITED",
+              "transactions": [],
+              "units": 1,
+              "value": 10
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "NOT LISTED"
+              },
+              "isin": "INE774A01012",
+              "name": "CREST ANIMATION STUDIOS, LIMITED",
+              "transactions": [],
+              "units": 500,
+              "value": 525
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "E2E.NSE"
+              },
+              "isin": "INE255Z01019",
+              "name": "E2E NETWORKS LIMITED",
+              "transactions": [],
+              "units": 5,
+              "value": 11309
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "EPIC.BSE"
+              },
+              "isin": "INE932F01015",
+              "name": "EPIC ENERGY LIMITED",
+              "transactions": [],
+              "units": 500,
+              "value": 22165
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "ETERNAL.NSE"
+              },
+              "isin": "INE758T01015",
+              "name": "ETERNAL LIMITED",
+              "transactions": [],
+              "units": 50,
+              "value": 15005
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "NOT LISTED"
+              },
+              "isin": "INE774B01028",
+              "name": "GLOBUS CORPOORATION, LIMITED",
+              "transactions": [],
+              "units": 500,
+              "value": 1000
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "IDFCFIRSTB.NSE"
+              },
+              "isin": "INE092T01019",
+              "name": "IDFC FIRST BANK LIMITED",
+              "transactions": [],
+              "units": 54,
+              "value": 4327.02
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "INDIGOPNTS.NSE"
+              },
+              "isin": "INE09VQ01012",
+              "name": "INDIGO PAINTS LIMITED",
+              "transactions": [],
+              "units": 13,
+              "value": 16687.45
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "JPASSOCIAT.NSE"
+              },
+              "isin": "INE455F01025",
+              "name": "JAIPRAKASH ASSOCIATES, LIMITED",
+              "transactions": [],
+              "units": 50,
+              "value": 157.5
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "JIOFIN.NSE"
+              },
+              "isin": "INE758E01017",
+              "name": "JIO FINANCIAL SERVICES, LIMITED",
+              "transactions": [],
+              "units": 14,
+              "value": 4286.8
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "NOT LISTED"
+              },
+              "isin": "INE918B01013",
+              "name": "JUPITER BIOSCIENCE LIMITED",
+              "transactions": [],
+              "units": 500,
+              "value": 1985
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "NOT LISTED"
+              },
+              "isin": "INE414E01017",
+              "name": "KOHINOOR BROADCASTING, CORPORATION LIMITED",
+              "transactions": [],
+              "units": 5000,
+              "value": 1200
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "NOT LISTED"
+              },
+              "isin": "INE721I01024",
+              "name": "NATIONAL STOCK EXCHANGE, OF INDIA LTD",
+              "transactions": [],
+              "units": 21,
+              "value": 21
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "RECLTD.NSE"
+              },
+              "isin": "INE020B01018",
+              "name": "REC LIMITED",
+              "transactions": [],
+              "units": 4,
+              "value": 1443.6
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "SAMMAANCAP.NSE"
+              },
+              "isin": "INE148I01020",
+              "name": "SAMMAAN CAPITAL LIMITED",
+              "transactions": [],
+              "units": 30,
+              "value": 4612.8
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "TCS.NSE"
+              },
+              "isin": "INE467B01029",
+              "name": "TATA CONSULTANCY SERVICES, LIMITED",
+              "transactions": [],
+              "units": 1,
+              "value": 3137.5
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "TMCV.NSE"
+              },
+              "isin": "INE1TAE01010",
+              "name": "TATA MOTORS LIMITED",
+              "transactions": [],
+              "units": 4,
+              "value": 1408
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "TMPV.NSE"
+              },
+              "isin": "INE155A01022",
+              "name": "TATA MOTORS PASSENGER, VEHICLES LIMITED",
+              "transactions": [],
+              "units": 4,
+              "value": 1427.2
+            },
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null,
+                "stock_symbol": "NOT LISTED"
+              },
+              "isin": "INE167C01023",
+              "name": "VISHAL EXPORTS OVERSEAS, LIMITED",
+              "transactions": [],
+              "units": 1000,
+              "value": 1000
+            }
+          ],
+          "government_securities": []
+        },
+        "linked_holders": [
+          {
+            "name": "UMAIMA  HUSEINI SURTI",
+            "pan": "ADXXXXXX3B"
+          }
+        ],
+        "value": 291657.93000000005
+      },
+      {
+        "additional_info": {
+          "linked_pans": [
+            "ADXXXXXX3B"
+          ]
+        },
+        "bo_id": "IN30463323161984",
+        "client_id": "23161984",
+        "demat_type": "NSDL",
+        "dp_id": "IN304633",
+        "dp_name": "FOURDEGREEWATER SERVICES PRIVATE LIMITED",
+        "holdings": {
+          "aifs": [],
+          "corporate_bonds": [],
+          "demat_mutual_funds": [],
+          "equities": [],
+          "government_securities": []
+        },
+        "linked_holders": [
+          {
+            "name": "UMAIMA  HUSEINI SURTI",
+            "pan": "ADXXXXXX3B"
+          }
+        ],
+        "value": 0
+      },
+      {
+        "additional_info": {
+          "linked_pans": [
+            "ADXXXXXX3B"
+          ]
+        },
+        "bo_id": "1208160102717003",
+        "client_id": "02717003",
+        "demat_type": "CDSL",
+        "dp_id": "12081601",
+        "dp_name": "ZERODHA BROKING LIMITED",
+        "holdings": {
+          "aifs": [],
+          "corporate_bonds": [],
+          "demat_mutual_funds": [
+            {
+              "additional_info": {
+                "close_units": null,
+                "open_units": null
+              },
+              "isin": "INF966L01CZ3",
+              "name": "QUANT MUTUAL FUND",
+              "transactions": [],
+              "units": 1021.029,
+              "value": 15152.07
+            }
+          ],
+          "equities": [],
+          "government_securities": []
+        },
+        "linked_holders": [],
+        "value": 15152.07
+      }
+    ],
+    "insurance": {
+      "life_insurance_policies": []
+    },
+    "investor": {
+      "address": "202 MOHAMADI COOP HSG SOCIETY, 102 MUTTON STREET BHENDI BAZAAR, MUMBAI, MAHARASHTRA INDIA",
+      "cas_id": "102969940",
+      "email": null,
+      "mobile": null,
+      "name": "UMAIMA  HUSEINI SURTI",
+      "pan": "ADXXXXXX3B",
+      "pincode": "400003"
+    },
+    "meta": {
+      "cas_type": "NSDL",
+      "generated_at": "2026-01-02T05:41:14",
+      "statement_period": {
+        "from": "2025-11-01",
+        "to": "2025-11-30"
+      }
+    },
+    "mutual_funds": [
+      {
+        "additional_info": {},
+        "amc": "Axis",
+        "folio_number": "910171957885",
+        "linked_holders": [
+          {
+            "name": "UMAIMA  HUSEINI SURTI",
+            "pan": "ADXXXXXX3B"
+          }
+        ],
+        "registrar": null,
+        "schemes": [
+          {
+            "additional_info": {
+              "close_units": null,
+              "open_units": null
+            },
+            "cost": 115000,
+            "gain": {
+              "absolute": 14204.279999999999,
+              "percentage": 12.351547826086955
+            },
+            "isin": "INF846K01W56",
+            "name": "Axis ESG, Integration Strategy, Fund - Regular, Growth",
+            "nav": 19.5814,
+            "nominees": [],
+            "transactions": [],
+            "type": "EQUITY",
+            "units": 5872.922,
+            "value": 129204.28
+          }
+        ],
+        "value": 129204.28
+      },
+      {
+        "additional_info": {},
+        "amc": "HDFC",
+        "folio_number": "6134102",
+        "linked_holders": [
+          {
+            "name": "UMAIMA  HUSEINI SURTI",
+            "pan": "ADXXXXXX3B"
+          }
+        ],
+        "registrar": null,
+        "schemes": [
+          {
+            "additional_info": {
+              "close_units": 1294.097,
+              "open_units": 1292.877
+            },
+            "cost": 560000,
+            "gain": {
+              "absolute": 2130184.37,
+              "percentage": 380.3900660714286
+            },
+            "isin": "INF179K01608",
+            "name": "HDFC Flexi Cap, Fund - Regular Plan, - Growth",
+            "nav": 432.7342,
+            "nominees": [],
+            "transactions": [
+              {
+                "additional_info": {
+                  "price": 2049.587,
+                  "stamp_duty": 0.12
+                },
+                "amount": 2499.88,
+                "balance": 1294.097,
+                "date": "2025-11-06",
+                "description": "SIP Purchase - Instalment 132/184 Physical",
+                "dividend_rate": null,
+                "nav": 2049.587,
+                "type": "PURCHASE_SIP",
+                "units": 1.22
+              }
+            ],
+            "type": "EQUITY",
+            "units": 1294.097,
+            "value": 2690184.37
+          },
+          {
+            "additional_info": {
+              "close_units": null,
+              "open_units": null
+            },
+            "cost": 36591.54,
+            "gain": {
+              "absolute": 437651.28,
+              "percentage": 1196.0449874479184
+            },
+            "isin": "INF179K01CR2",
+            "name": "HDFC Mid Cap, Fund - Regular Plan, - Growth",
+            "nav": 15.8026,
+            "nominees": [],
+            "transactions": [],
+            "type": "EQUITY",
+            "units": 2315.537,
+            "value": 474242.82
+          }
+        ],
+        "value": 3164427.19
+      },
+      {
+        "additional_info": {},
+        "amc": "Franklin Templeton",
+        "folio_number": "3104060682",
+        "linked_holders": [
+          {
+            "name": "UMAIMA  HUSEINI SURTI",
+            "pan": "ADXXXXXX3B"
+          }
+        ],
+        "registrar": null,
+        "schemes": [
+          {
+            "additional_info": {
+              "close_units": null,
+              "open_units": null
+            },
+            "cost": 123567.61,
+            "gain": {
+              "absolute": 61605.95,
+              "percentage": 49.8560666504758
+            },
+            "isin": "INF205K01189",
+            "name": "Invesco India, Contra Fund -, Regular Plan, Growth",
+            "nav": 92.6956,
+            "nominees": [],
+            "transactions": [],
+            "type": "EQUITY",
+            "units": 1333.047,
+            "value": 185173.56
+          }
+        ],
+        "value": 185173.56
+      },
+      {
+        "additional_info": {},
+        "amc": "JM",
+        "folio_number": "79911687192",
+        "linked_holders": [
+          {
+            "name": "UMAIMA  HUSEINI SURTI",
+            "pan": "ADXXXXXX3B"
+          }
+        ],
+        "registrar": null,
+        "schemes": [
+          {
+            "additional_info": {
+              "close_units": null,
+              "open_units": null
+            },
+            "cost": 5000,
+            "gain": {
+              "absolute": 2507.2700000000004,
+              "percentage": 50.14540000000001
+            },
+            "isin": "INF192K01635",
+            "name": "JM Flexicap Fund -, (Regular) - Growth, Option",
+            "nav": 65.7514,
+            "nominees": [],
+            "transactions": [],
+            "type": "EQUITY",
+            "units": 76.044,
+            "value": 7507.27
+          }
+        ],
+        "value": 7507.27
+      },
+      {
+        "additional_info": {},
+        "amc": "Kotak",
+        "folio_number": "13324102",
+        "linked_holders": [
+          {
+            "name": "UMAIMA  HUSEINI SURTI",
+            "pan": "ADXXXXXX3B"
+          }
+        ],
+        "registrar": null,
+        "schemes": [
+          {
+            "additional_info": {
+              "close_units": 5679.48,
+              "open_units": 5679.48
+            },
+            "cost": 100000,
+            "gain": {
+              "absolute": 14004.199999999997,
+              "percentage": 14.004199999999997
+            },
+            "isin": "INF174KA1HS9",
+            "name": "Kotak Multicap, Fund Regular Plan -, Growth",
+            "nav": 17.6072,
+            "nominees": [],
+            "transactions": [
+              {
+                "additional_info": {
+                  "price": 20.169,
+                  "stamp_duty": -0.25
+                },
+                "amount": 4999.75,
+                "balance": 5927.373,
+                "date": "2025-11-17",
+                "description": "Systematic Purchase (Continuous Offer)Payment not received from banker - Instalment No 25",
+                "dividend_rate": null,
+                "nav": 20.169,
+                "type": "PURCHASE_SIP",
+                "units": 247.893
+              },
+              {
+                "additional_info": {
+                  "price": 20.169,
+                  "stamp_duty": 0.25
+                },
+                "amount": 4999.75,
+                "balance": 6175.266,
+                "date": "2025-11-17",
+                "description": "Systematic Purchase (Continuous Offer) - Instalment 25/914 - via Edge360",
+                "dividend_rate": null,
+                "nav": 20.169,
+                "type": "PURCHASE_SIP",
+                "units": 247.893
+              }
+            ],
+            "type": "EQUITY",
+            "units": 5679.48,
+            "value": 114004.2
+          }
+        ],
+        "value": 114004.2
+      },
+      {
+        "additional_info": {},
+        "amc": "Mirae Asset",
+        "folio_number": "79926541496",
+        "linked_holders": [
+          {
+            "name": "UMAIMA  HUSEINI SURTI",
+            "pan": "ADXXXXXX3B"
+          }
+        ],
+        "registrar": null,
+        "schemes": [
+          {
+            "additional_info": {
+              "close_units": 286.415,
+              "open_units": 95.226
+            },
+            "cost": 7500,
+            "gain": {
+              "absolute": -3.949999999999818,
+              "percentage": -0.052666666666664246
+            },
+            "isin": "INF769K01ES4",
+            "name": "Mirae Asset, Focused Fund -, Regular Plan",
+            "nav": 26.1858,
+            "nominees": [],
+            "transactions": [
+              {
+                "additional_info": {
+                  "price": 26.097,
+                  "stamp_duty": 0.12
+                },
+                "amount": 2499.88,
+                "balance": 191.018,
+                "date": "2025-11-10",
+                "description": "Online Systematic Investment (67/68)",
+                "dividend_rate": null,
+                "nav": 26.097,
+                "type": "PURCHASE_SIP",
+                "units": 95.792
+              },
+              {
+                "additional_info": {
+                  "price": 26.205,
+                  "stamp_duty": 0.12
+                },
+                "amount": 2499.88,
+                "balance": 286.415,
+                "date": "2025-11-20",
+                "description": "Online Systematic Investment (61/61)",
+                "dividend_rate": null,
+                "nav": 26.205,
+                "type": "PURCHASE_SIP",
+                "units": 95.397
+              }
+            ],
+            "type": "OTHER",
+            "units": 286.415,
+            "value": 7496.05
+          }
+        ],
+        "value": 7496.05
+      },
+      {
+        "additional_info": {},
+        "amc": "WhiteOak",
+        "folio_number": "1000281795",
+        "linked_holders": [
+          {
+            "name": "UMAIMA  HUSEINI SURTI",
+            "pan": "ADXXXXXX3B"
+          }
+        ],
+        "registrar": null,
+        "schemes": [
+          {
+            "additional_info": {
+              "close_units": 6202.59,
+              "open_units": 5921.12
+            },
+            "cost": 95000,
+            "gain": {
+              "absolute": 16956.75,
+              "percentage": 17.84921052631579
+            },
+            "isin": "INF03VN01506",
+            "name": "WhiteOak Capital -, Flexi Cap Fund -, Regular Plan, Growth",
+            "nav": 15.3162,
+            "nominees": [],
+            "transactions": [
+              {
+                "additional_info": {
+                  "price": 17.763,
+                  "stamp_duty": 0.25
+                },
+                "amount": 4999.75,
+                "balance": 6202.59,
+                "date": "2025-11-10",
+                "description": "Systematic Purchase  - Instalment 25/914 - via Edge360",
+                "dividend_rate": null,
+                "nav": 17.763,
+                "type": "PURCHASE_SIP",
+                "units": 281.47
+              }
+            ],
+            "type": "EQUITY",
+            "units": 6202.59,
+            "value": 111956.75
+          }
+        ],
+        "value": 111956.75
+      },
+      {
+        "additional_info": {},
+        "amc": "quant",
+        "folio_number": "51071969221",
+        "linked_holders": [
+          {
+            "name": "UMAIMA  HUSEINI SURTI",
+            "pan": "ADXXXXXX3B"
+          }
+        ],
+        "registrar": null,
+        "schemes": [
+          {
+            "additional_info": {
+              "close_units": null,
+              "open_units": null
+            },
+            "cost": 200000,
+            "gain": {
+              "absolute": -1897.2999999999884,
+              "percentage": -0.9486499999999941
+            },
+            "isin": "INF966L01CW0",
+            "name": "quant Momentum, Fund - Regular Plan, Growth",
+            "nav": 14.5816,
+            "nominees": [],
+            "transactions": [],
+            "type": "EQUITY",
+            "units": 13715.88,
+            "value": 198102.7
+          }
+        ],
+        "value": 198102.7
+      },
+      {
+        "additional_info": {},
+        "amc": "Canara Robeco",
+        "folio_number": "1868443",
+        "linked_holders": [
+          {
+            "name": "UMAIMA HUSEINI SURTI",
+            "pan": "ADXXXXXX3B"
+          },
+          {
+            "name": "Zainab S Tinwala",
+            "pan": "AFXXXXXX4Q"
+          }
+        ],
+        "registrar": null,
+        "schemes": [
+          {
+            "additional_info": {
+              "close_units": null,
+              "open_units": null
+            },
+            "cost": 150000,
+            "gain": {
+              "absolute": 1235905.84,
+              "percentage": 823.9372266666667
+            },
+            "isin": "INF740K01037",
+            "name": "DSP Flexi Cap, Fund - Regular Plan, - Growth",
+            "nav": 11.4064,
+            "nominees": [],
+            "transactions": [],
+            "type": "EQUITY",
+            "units": 13150.5,
+            "value": 1385905.84
+          }
+        ],
+        "value": 1385905.84
+      },
+      {
+        "additional_info": {},
+        "amc": "Bandhan",
+        "folio_number": "1215430",
+        "linked_holders": [
+          {
+            "name": "UMAIMA HUSEINI SURTI",
+            "pan": "ADXXXXXX3B"
+          },
+          {
+            "name": "Shujauddin A Tinwala",
+            "pan": "AAXXXXXX2N"
+          }
+        ],
+        "registrar": null,
+        "schemes": [
+          {
+            "additional_info": {
+              "close_units": null,
+              "open_units": null
+            },
+            "cost": 300000,
+            "gain": {
+              "absolute": 848368.79,
+              "percentage": 282.7895966666667
+            },
+            "isin": "INF194K01391",
+            "name": "Bandhan Flexi Cap, Fund-Regular Plan-, Growth",
+            "nav": 56.5486,
+            "nominees": [],
+            "transactions": [],
+            "type": "EQUITY",
+            "units": 5305.175,
+            "value": 1148368.79
+          }
+        ],
+        "value": 1148368.79
+      },
+      {
+        "additional_info": {},
+        "amc": "Canara Robeco",
+        "folio_number": "1101878",
+        "linked_holders": [],
+        "registrar": null,
+        "schemes": [
+          {
+            "additional_info": {
+              "close_units": null,
+              "open_units": null
+            },
+            "cost": 88944.65,
+            "gain": {
+              "absolute": 521738.76,
+              "percentage": 586.5881309331141
+            },
+            "isin": "INF740K01037",
+            "name": "DSP Flexi Cap, Fund - Regular Plan, - Growth",
+            "nav": 15.3495,
+            "nominees": [],
+            "transactions": [],
+            "type": "EQUITY",
+            "units": 5794.62,
+            "value": 610683.41
+          }
+        ],
+        "value": 610683.41
+      }
+    ],
+    "nps": [],
+    "unlisted_shares": [
+      {
+        "pan": "ADPPT7723B",
+        "investment_opportunity_name": "National Stock Exchange Ltd (NSE)",
+        "type": "unlisted",
+        "isin": "INE721101024",
+        "units": 21.00,
+        "purchase_price_per_unit": 2422.93,
+        "purchase_value": 50881.48,
+        "current_price_per_unit": 2075.00,
+        "current_value": 43575.00,
+        "unrealized_pl": -7306.48,
+        "report_date": "2026-01-08"
+      }
+    ],
+    "summary": {
+      "accounts": {
+        "demat": {
+          "count": 3,
+          "total_value": 306810.00000000006
+        },
+        "insurance": {
+          "count": 0,
+          "total_value": 0
+        },
+        "mutual_funds": {
+          "count": 11,
+          "total_value": 7062830.04
+        },
+        "nps": {
+          "count": 0,
+          "total_value": 0
+        },
+        "unlisted_shares": {
+          "count": 1,
+          "total_value": 43575.00
+        }
+      },
+      "total_value": 7369640.04
+    }
+  }

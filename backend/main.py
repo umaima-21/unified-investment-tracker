@@ -118,7 +118,10 @@ from api.routes import (
     epf_accounts,
     us_stocks,
     liquid,
-    admin_migration
+    admin_migration,
+    unlisted_shares,
+    insurance,
+    other_assets
 )
 
 app.include_router(mutual_funds.router, prefix="/api/mutual-funds", tags=["Mutual Funds"])
@@ -136,7 +139,10 @@ app.include_router(fixed_deposits.router, prefix="/api/fixed-deposits", tags=["F
 app.include_router(ppf_accounts.router, prefix="/api/ppf-accounts", tags=["PPF Accounts"])
 app.include_router(epf_accounts.router, prefix="/api/epf-accounts", tags=["EPF Accounts"])
 app.include_router(us_stocks.router, prefix="/api/us-stocks", tags=["US Stocks"])
+app.include_router(unlisted_shares.router, prefix="/api/unlisted-shares", tags=["Unlisted Shares"])
 app.include_router(liquid.router, prefix="/api/liquid", tags=["Liquid"])
+app.include_router(insurance.router, prefix="/api/insurance", tags=["Insurance"])
+app.include_router(other_assets.router, prefix="/api/other-assets", tags=["Other Assets"])
 app.include_router(admin_migration.router, tags=["Admin"])
 
 

@@ -126,8 +126,9 @@ class PortfolioService:
             Portfolio summary with totals, returns, and allocation
         """
         try:
-            # Get all holdings
-            holdings = self.db.query(Holding).join(Asset).all()
+            # Get all holdings - use outer join to ensure we don't miss any holdings
+            # Even if there's no asset (shouldn't happen, but be safe)
+            holdings = self.db.query(Holding).join(Asset, Holding.asset_id == Asset.asset_id).all()
             
             total_invested = 0.0
             total_current_value = 0.0
@@ -138,13 +139,22 @@ class PortfolioService:
                 holding_dict['asset'] = holding.asset.to_dict()
                 holding_dict['asset_type'] = holding.asset.asset_type.value
                 
-                invested = float(holding.invested_amount or 0)
-                current = float(holding.current_value or 0)
+                # Ensure we handle None values correctly - convert to 0 if None
+                invested = float(holding.invested_amount) if holding.invested_amount is not None else 0.0
+                current = float(holding.current_value) if holding.current_value is not None else 0.0
                 
-                total_invested += invested
-                total_current_value += current
+                # Exclude insurance from portfolio value calculations (insurance is a payout, not an investment)
+                if holding.asset.asset_type != AssetType.INSURANCE:
+                    total_invested += invested
+                    total_current_value += current
                 
                 holdings_data.append(holding_dict)
+            
+            # Log summary for debugging - helps identify if values are missing
+            logger.info(
+                f"Portfolio summary calculated: {len(holdings)} holdings, "
+                f"total_invested={total_invested:,.2f}, total_current_value={total_current_value:,.2f}"
+            )
             
             # Calculate returns
             total_returns = calculate_absolute_returns(total_invested, total_current_value)

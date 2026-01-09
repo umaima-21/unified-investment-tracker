@@ -14,7 +14,9 @@ import {
   PiggyBank,
   Briefcase,
   LineChart,
-  Globe
+  Globe,
+  Shield,
+  Package
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/contexts/auth-context'
@@ -33,7 +35,10 @@ const navigation = [
   { name: 'PPF Accounts', href: '/ppf-accounts', icon: PiggyBank },
   { name: 'EPF Accounts', href: '/epf-accounts', icon: Briefcase },
   { name: 'US Stocks', href: '/us-stocks', icon: Globe },
+  { name: 'Unlisted Shares', href: '/unlisted-shares', icon: Building2 },
   { name: 'Liquid', href: '/liquid', icon: Wallet },
+  { name: 'Insurance', href: '/insurance', icon: Shield },
+  { name: 'Other Assets', href: '/other-assets', icon: Package },
   { name: 'Data Validation', href: '/data-validation', icon: CheckSquare },
   { name: 'Assets', href: '/assets', icon: Settings },
 ]
@@ -43,11 +48,11 @@ export function Sidebar() {
   const { logout, user } = useAuth()
 
   return (
-    <div className="flex h-screen w-64 flex-col bg-card border-r">
-      <div className="flex h-16 items-center border-b px-6">
+    <div className="flex h-screen w-64 flex-col bg-card border-r overflow-hidden">
+      <div className="flex h-16 items-center border-b px-6 flex-shrink-0">
         <h1 className="text-xl font-bold">Investment Tracker</h1>
       </div>
-      <nav className="flex-1 space-y-1 px-3 py-4">
+      <nav className="flex-1 space-y-1 px-3 py-4 overflow-y-auto">
         {navigation.map((item) => {
           const isActive = location.pathname === item.href
           return (
@@ -67,7 +72,7 @@ export function Sidebar() {
           )
         })}
       </nav>
-      <div className="border-t p-4">
+      <div className="border-t p-4 flex-shrink-0">
         <div className="mb-2 px-3 text-sm text-muted-foreground">
           {user && <div className="font-medium text-foreground">{user}</div>}
         </div>

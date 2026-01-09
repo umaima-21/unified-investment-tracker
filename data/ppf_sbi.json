@@ -1,0 +1,18 @@
+{
+  "ppf_accounts": [
+    {
+      "account_number": "000000104350883O8",
+      "bank": "State Bank of India",
+      "account_holder": "Mrs. UMAIMA HUSEINI SURTI",
+      "account_type": "PPF Account",
+      "current_balance": 2865263.64,
+      "currency": "INR",
+      "interest_rate": 7.1,
+      "opening_date": "2010-04-01",
+      "maturity_date": "2025-03-31",
+      "status": "active",
+      "last_updated": "2026-01-06"
+    }
+  ]
+}
+

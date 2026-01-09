@@ -1,0 +1,24 @@
+{
+  "global_equity": {
+    "category": "Global Equity",
+    "sub_category": "US Stock",
+    "summary": {
+      "invested_amount_inr": 138040.00,
+      "market_value_inr": 166164.00,
+      "market_value_percentage": 2.24,
+      "gain_loss_inr": 28124.00,
+      "gain_loss_percentage": 20.37
+    },
+    "holdings": [
+      {
+        "type": "US Stock",
+        "invested_amount_inr": 138040.00,
+        "market_value_inr": 166164.00,
+        "market_value_percentage": 2.24,
+        "gain_loss_inr": 28124.00,
+        "gain_loss_percentage": 20.37
+      }
+    ]
+  }
+}
+

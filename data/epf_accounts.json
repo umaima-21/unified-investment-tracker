@@ -1,0 +1,46 @@
+{
+  "epf_accounts": [
+    {
+      "account_number": "THTHA02061700000178653",
+      "pf_account_number": "THTHA02006424000697823",
+      "eps_account_number": "THTHA02061700000178653",
+      "uan": "100681079734",
+      "employer": "LARSEN & TOUBRO OFFICERS AND SUPERVISORY STAFF PROVIDENT FUND",
+      "account_holder": "UMAIMA Huseini SURTI",
+      "employee_code": "40044254",
+      "member_contribution": 244284,
+      "employer_contribution": 224284,
+      "interest_member": 12322,
+      "interest_employer": 11289,
+      "total_balance": 492179,
+      "interest_rate": 8.25,
+      "date_of_joining": "2024-09-17",
+      "date_of_membership": "2024-09-17",
+      "status": "active",
+      "last_updated": "2026-01-06",
+      "pf_contribution_rate": 12.0,
+      "eps_contribution": 11250,
+      "rpfc_area": "Regional PF Commissioner-Thane (Mumbai-II)",
+      "statement_period": "2025-2026"
+    },
+    {
+      "account_number": "PUPUN20996240000010005",
+      "uan": "100681079734",
+      "employer": "CHISTATS LABS PRIVATE LIMITED",
+      "account_holder": "UMAIMA HUSEINI SURTI",
+      "employee_code": "",
+      "member_contribution": 59400,
+      "employer_contribution": 18150,
+      "interest_member": 24936,
+      "interest_employer": 0,
+      "total_balance": 102486,
+      "interest_rate": 8.25,
+      "date_of_joining": "2020-04-01",
+      "date_of_leaving": "2022-12-31",
+      "status": "inactive",
+      "last_updated": "2026-01-06",
+      "pf_contribution_rate": 12.0
+    }
+  ]
+}
+

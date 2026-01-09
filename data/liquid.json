@@ -1,0 +1,85 @@
+{
+  "liquid": {
+    "category": "Liquid",
+    "summary": {
+      "invested_amount_inr": 126015.00,
+      "market_value_inr": 126015.00,
+      "market_value_percentage": 1.70,
+      "gain_loss_inr": 0.00,
+      "gain_loss_percentage": 0.00
+    },
+    "accounts": [
+      {
+        "account_name": "Federal Savings a/c",
+        "account_number": "XX6577",
+        "account_type": "Savings Account",
+        "invested_amount_inr": 14.00,
+        "market_value_inr": 14.00,
+        "market_value_percentage": 0.00,
+        "gain_loss_inr": 0.00,
+        "gain_loss_percentage": 0.00
+      },
+      {
+        "account_name": "HDFC Bank",
+        "account_number": "XX5651",
+        "account_type": "Savings Account",
+        "invested_amount_inr": 19.00,
+        "market_value_inr": 19.00,
+        "market_value_percentage": 0.00,
+        "gain_loss_inr": 0.00,
+        "gain_loss_percentage": 0.00
+      },
+      {
+        "account_name": "ICICI Bank",
+        "account_number": "XX3125",
+        "account_type": "Savings Account",
+        "invested_amount_inr": 8573.00,
+        "market_value_inr": 8573.00,
+        "market_value_percentage": 0.12,
+        "gain_loss_inr": 0.00,
+        "gain_loss_percentage": 0.00
+      },
+      {
+        "account_name": "ICICI Bank",
+        "account_number": "XX3129",
+        "account_type": "Savings Account",
+        "invested_amount_inr": 17306.00,
+        "market_value_inr": 17306.00,
+        "market_value_percentage": 0.23,
+        "gain_loss_inr": 0.00,
+        "gain_loss_percentage": 0.00
+      },
+      {
+        "account_name": "ICICI Bank",
+        "account_number": "XX3130",
+        "account_type": "Savings Account",
+        "invested_amount_inr": 20675.00,
+        "market_value_inr": 20675.00,
+        "market_value_percentage": 0.28,
+        "gain_loss_inr": 0.00,
+        "gain_loss_percentage": 0.00
+      },
+      {
+        "account_name": "ICICI Bank",
+        "account_number": "XX4128",
+        "account_type": "Savings Account",
+        "invested_amount_inr": 39655.00,
+        "market_value_inr": 39655.00,
+        "market_value_percentage": 0.53,
+        "gain_loss_inr": 0.00,
+        "gain_loss_percentage": 0.00
+      },
+      {
+        "account_name": "State Bank of India",
+        "account_number": "XX6317",
+        "account_type": "Savings Account",
+        "invested_amount_inr": 39772.00,
+        "market_value_inr": 39772.00,
+        "market_value_percentage": 0.54,
+        "gain_loss_inr": 0.00,
+        "gain_loss_percentage": 0.00
+      }
+    ]
+  }
+}
+

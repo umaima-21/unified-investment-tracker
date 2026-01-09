@@ -2,11 +2,13 @@ import { usePortfolioSummary, usePortfolioHistory, usePortfolioAllocation } from
 import { useHoldings } from '@/hooks/use-holdings'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { formatCurrency, formatPercentage } from '@/lib/utils'
-import { TrendingUp, TrendingDown, Wallet, DollarSign, PieChart, BarChart3, Activity, Landmark, Building2, LineChart, Globe } from 'lucide-react'
+import { TrendingUp, TrendingDown, Wallet, DollarSign, PieChart, BarChart3, Activity, Landmark, Building2, LineChart, Globe, Shield, Package } from 'lucide-react'
 import { PortfolioChart } from '@/components/dashboard/portfolio-chart'
 import { AllocationChart } from '@/components/dashboard/allocation-chart'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { useQuery } from '@tanstack/react-query'
+import { api, endpoints } from '@/lib/api'
 
 function MetricCard({ 
   title, 
@@ -44,6 +46,15 @@ export function DashboardPage() {
   const { data: history, isLoading: historyLoading } = usePortfolioHistory(30)
   const { data: allocation, isLoading: allocationLoading } = usePortfolioAllocation()
   const { data: holdings, isLoading: holdingsLoading } = useHoldings()
+  
+  // Get insurance holdings (payouts, not included in Current Value)
+  const { data: insuranceHoldings, isLoading: insuranceLoading } = useQuery({
+    queryKey: ['insurance', 'holdings'],
+    queryFn: async () => {
+      const { data } = await api.get(endpoints.insurance.holdings)
+      return data || []
+    },
+  })
 
   if (summaryLoading) {
     return (
@@ -66,28 +77,106 @@ export function DashboardPage() {
 
   const returnsPercentage = summary?.returns_percentage || 0
   const totalInvested = summary?.total_invested || 0
-  const totalValue = summary?.total_current_value || 0
   const totalReturns = summary?.total_returns || 0
 
-  // Calculate asset type breakdown
+  // Calculate asset type breakdown from holdings to ensure consistency
   const assetAllocation = allocation?.asset_allocation || {}
-  const mfAllocation = assetAllocation['MF'] || { current_value: 0, invested: 0, percentage: 0 }
-  const stockAllocation = assetAllocation['STOCK'] || { current_value: 0, invested: 0, percentage: 0 }
-  const cryptoAllocation = assetAllocation['CRYPTO'] || { current_value: 0, invested: 0, percentage: 0 }
-  const fdAllocation = assetAllocation['FD'] || { current_value: 0, invested: 0, percentage: 0 }
-  const ppfAllocation = assetAllocation['PPF'] || { current_value: 0, invested: 0, percentage: 0 }
-  const epfAllocation = assetAllocation['EPF'] || { current_value: 0, invested: 0, percentage: 0 }
   
-  // Get US Stocks and Liquid allocations from holdings
-  const usStocksHoldings = holdings?.filter((h: any) => 
-    h.asset?.asset_type === 'STOCK' && h.asset?.exchange === 'US'
+  // Helper function to check if holding is ETF
+  const isEtfHolding = (holding: any) => {
+    const name = (holding?.asset?.name || '').toUpperCase()
+    const assetType = holding?.asset?.asset_type
+    const folio = holding?.folio_number || ''
+    const dematFolio = ((folio.startsWith('IN') || folio.startsWith('12')) && folio.length === 16)
+    
+    // ETF if: name contains "ETF" OR (MF type with demat folio - demat MFs/ETFs)
+    // Note: STOCK type with "ETF" in name should also be considered ETF
+    return name.includes('ETF') || (assetType === 'MF' && dematFolio)
+  }
+
+  // Calculate all allocations from holdings to ensure consistency
+  // Mutual Funds: MF type that are NOT ETFs
+  const mfHoldings = holdings?.filter((h: any) => 
+    h.asset?.asset_type === 'MF' && !isEtfHolding(h)
   ) || []
+  const mfAllocation = mfHoldings.reduce((acc: any, h: any) => {
+    acc.current_value += h.current_value || 0
+    acc.invested += h.invested_amount || 0
+    return acc
+  }, { current_value: 0, invested: 0, percentage: 0 })
+
+  // Stocks: STOCK type that are not ETFs and not US stocks
+  const stockHoldings = holdings?.filter((h: any) => {
+    const assetType = h.asset?.asset_type
+    const name = (h.asset?.name || '').toUpperCase()
+    const exchange = h.asset?.exchange
+    return assetType === 'STOCK' && !name.includes('ETF') && exchange !== 'US'
+  }) || []
+  const stockAllocationSeparated = stockHoldings.reduce((acc: any, h: any) => {
+    acc.current_value += h.current_value || 0
+    acc.invested += h.invested_amount || 0
+    return acc
+  }, { current_value: 0, invested: 0, percentage: 0 })
+
+  // ETFs: Holdings with "ETF" in name OR MF type with demat folio
+  // Exclude US stocks (they have their own category)
+  const etfHoldings = holdings?.filter((h: any) => 
+    isEtfHolding(h) && !(h.asset?.asset_type === 'STOCK' && h.asset?.exchange === 'US')
+  ) || []
+  const etfAllocation = etfHoldings.reduce((acc: any, h: any) => {
+    acc.current_value += h.current_value || 0
+    acc.invested += h.invested_amount || 0
+    return acc
+  }, { current_value: 0, invested: 0, percentage: 0 })
+
+  // Crypto
+  const cryptoHoldings = holdings?.filter((h: any) => h.asset?.asset_type === 'CRYPTO') || []
+  const cryptoAllocation = cryptoHoldings.reduce((acc: any, h: any) => {
+    acc.current_value += h.current_value || 0
+    acc.invested += h.invested_amount || 0
+    return acc
+  }, { current_value: 0, invested: 0, percentage: 0 })
+
+  // Fixed Deposits: FD type that are NOT liquid accounts
+  const fdHoldings = holdings?.filter((h: any) => 
+    h.asset?.asset_type === 'FD' && !h.asset?.extra_data?.is_liquid
+  ) || []
+  const fdAllocation = fdHoldings.reduce((acc: any, h: any) => {
+    acc.current_value += h.current_value || 0
+    acc.invested += h.invested_amount || 0
+    return acc
+  }, { current_value: 0, invested: 0, percentage: 0 })
+
+  // PPF Accounts
+  const ppfHoldings = holdings?.filter((h: any) => h.asset?.asset_type === 'PPF') || []
+  const ppfAllocation = ppfHoldings.reduce((acc: any, h: any) => {
+    acc.current_value += h.current_value || 0
+    acc.invested += h.invested_amount || 0
+    return acc
+  }, { current_value: 0, invested: 0, percentage: 0 })
+
+  // EPF Accounts
+  const epfHoldings = holdings?.filter((h: any) => h.asset?.asset_type === 'EPF') || []
+  const epfAllocation = epfHoldings.reduce((acc: any, h: any) => {
+    acc.current_value += h.current_value || 0
+    acc.invested += h.invested_amount || 0
+    return acc
+  }, { current_value: 0, invested: 0, percentage: 0 })
+
+  // US Stocks: STOCK type with US exchange, excluding ETFs
+  const usStocksHoldings = holdings?.filter((h: any) => {
+    const assetType = h.asset?.asset_type
+    const exchange = h.asset?.exchange
+    const name = (h.asset?.name || '').toUpperCase()
+    return assetType === 'STOCK' && exchange === 'US' && !name.includes('ETF')
+  }) || []
   const usStocksAllocation = usStocksHoldings.reduce((acc: any, h: any) => {
     acc.current_value += h.current_value || 0
     acc.invested += h.invested_amount || 0
     return acc
   }, { current_value: 0, invested: 0, percentage: 0 })
   
+  // Liquid Accounts
   const liquidHoldings = holdings?.filter((h: any) => 
     h.asset?.extra_data?.is_liquid === true
   ) || []
@@ -97,54 +186,114 @@ export function DashboardPage() {
     return acc
   }, { current_value: 0, invested: 0, percentage: 0 })
   
-  // Calculate percentages
-  if (totalValue > 0) {
-    usStocksAllocation.percentage = (usStocksAllocation.current_value / totalValue) * 100
-    liquidAllocation.percentage = (liquidAllocation.current_value / totalValue) * 100
-  }
+  // Unlisted Shares
+  const unlistedSharesHoldings = holdings?.filter((h: any) => 
+    h.asset?.asset_type === 'UNLISTED'
+  ) || []
+  const unlistedSharesAllocation = unlistedSharesHoldings.reduce((acc: any, h: any) => {
+    acc.current_value += h.current_value || 0
+    acc.invested += h.invested_amount || 0
+    return acc
+  }, { current_value: 0, invested: 0, percentage: 0 })
+  
+  // Other Assets
+  const otherAssetsHoldingsFromDb = holdings?.filter((h: any) => 
+    h.asset?.asset_type === 'OTHER'
+  ) || []
+  const otherAssetsAllocation = otherAssetsHoldingsFromDb.reduce((acc: any, h: any) => {
+    acc.current_value += h.current_value || 0
+    acc.invested += h.invested_amount || 0
+    return acc
+  }, { current_value: 0, invested: 0, percentage: 0 })
+  
+  // Insurance Policies (payouts - NOT included in Current Value)
+  const insuranceAllocation = (insuranceHoldings || []).reduce((acc: any, policy: any) => {
+    acc.sum_assured += policy.sum_assured_value || 0
+    acc.premium += policy.invested_amount || 0
+    acc.annual_premium += policy.annual_premium || 0
+    acc.count += 1
+    return acc
+  }, { sum_assured: 0, premium: 0, annual_premium: 0, count: 0 })
 
-  const isEtfHolding = (holding: any) => {
-    const name = (holding?.asset?.name || '').toUpperCase()
-    const assetType = holding?.asset?.asset_type
-    const folio = holding?.folio_number || ''
-    const dematFolio = ((folio.startsWith('IN') || folio.startsWith('12')) && folio.length === 16)
-    
-    // ETF if: name contains "ETF" OR (MF type with demat folio - demat MFs/ETFs)
-    return name.includes('ETF') || (assetType === 'MF' && dematFolio)
-  }
+  // Calculate total from all individual allocations to ensure consistency
+  // NOTE: Insurance is NOT included in total value as it's a payout, not an investment
+  const totalValue = 
+    mfAllocation.current_value +
+    stockAllocationSeparated.current_value +
+    etfAllocation.current_value +
+    cryptoAllocation.current_value +
+    fdAllocation.current_value +
+    ppfAllocation.current_value +
+    epfAllocation.current_value +
+    usStocksAllocation.current_value +
+    liquidAllocation.current_value +
+    unlistedSharesAllocation.current_value +
+    otherAssetsAllocation.current_value
 
-  // Separate Stocks and ETFs
-  // Stocks: STOCK type that are not ETFs (by name)
-  const stockHoldings = holdings?.filter(h => {
+  // Validation: Check if all holdings are accounted for
+  const allCategorizedHoldings = [
+    ...mfHoldings,
+    ...stockHoldings,
+    ...etfHoldings,
+    ...cryptoHoldings,
+    ...fdHoldings,
+    ...ppfHoldings,
+    ...epfHoldings,
+    ...usStocksHoldings,
+    ...liquidHoldings,
+    ...unlistedSharesHoldings,
+    ...otherAssetsHoldingsFromDb
+  ]
+  
+  // Find uncategorized holdings (for debugging)
+  // Exclude insurance and other assets from uncategorized check as they're handled separately
+  const uncategorizedHoldings = holdings?.filter((h: any) => {
+    const holdingId = h.holding_id
     const assetType = h.asset?.asset_type
-    const name = (h.asset?.name || '').toUpperCase()
-    return assetType === 'STOCK' && !name.includes('ETF')
+    // Skip insurance and other assets as they're handled separately
+    if (assetType === 'INSURANCE' || assetType === 'OTHER') return false
+    return !allCategorizedHoldings.some((c: any) => c.holding_id === holdingId)
   }) || []
   
-  // ETFs: Holdings with "ETF" in name OR MF type with demat folio
-  const etfHoldings = holdings?.filter(h => isEtfHolding(h)) || []
+  // Calculate total from ALL holdings (including any uncategorized)
+  const totalValueFromAllHoldings = holdings?.reduce((sum: number, h: any) => {
+    return sum + (h.current_value || 0)
+  }, 0) || 0
 
-  // Calculate separate allocations for Stocks and ETFs
-  const stockAllocationSeparated = stockHoldings.reduce((acc, h) => {
-    const currentValue = h.current_value || 0
-    const invested = h.invested_amount || 0
-    acc.current_value += currentValue
-    acc.invested += invested
-    return acc
-  }, { current_value: 0, invested: 0, percentage: 0 })
+  // If there's a mismatch, log it for debugging
+  if (Math.abs(totalValue - totalValueFromAllHoldings) > 0.01) {
+    console.warn('Dashboard calculation mismatch:', {
+      totalFromCategories: totalValue,
+      totalFromAllHoldings: totalValueFromAllHoldings,
+      difference: totalValueFromAllHoldings - totalValue,
+      uncategorizedCount: uncategorizedHoldings.length,
+      uncategorizedHoldings: uncategorizedHoldings.map((h: any) => ({
+        id: h.holding_id,
+        name: h.asset?.name,
+        type: h.asset?.asset_type,
+        exchange: h.asset?.exchange,
+        is_liquid: h.asset?.extra_data?.is_liquid,
+        current_value: h.current_value
+      }))
+    })
+  }
 
-  const etfAllocation = etfHoldings.reduce((acc, h) => {
-    const currentValue = h.current_value || 0
-    const invested = h.invested_amount || 0
-    acc.current_value += currentValue
-    acc.invested += invested
-    return acc
-  }, { current_value: 0, invested: 0, percentage: 0 })
+  // Use the total from all holdings to ensure accuracy
+  const finalTotalValue = totalValueFromAllHoldings > 0 ? totalValueFromAllHoldings : totalValue
 
-  // Calculate percentages
-  if (totalValue > 0) {
-    stockAllocationSeparated.percentage = (stockAllocationSeparated.current_value / totalValue) * 100
-    etfAllocation.percentage = (etfAllocation.current_value / totalValue) * 100
+  // Calculate percentages based on the final total
+  if (finalTotalValue > 0) {
+    mfAllocation.percentage = (mfAllocation.current_value / finalTotalValue) * 100
+    stockAllocationSeparated.percentage = (stockAllocationSeparated.current_value / finalTotalValue) * 100
+    etfAllocation.percentage = (etfAllocation.current_value / finalTotalValue) * 100
+    cryptoAllocation.percentage = (cryptoAllocation.current_value / finalTotalValue) * 100
+    fdAllocation.percentage = (fdAllocation.current_value / finalTotalValue) * 100
+    ppfAllocation.percentage = (ppfAllocation.current_value / finalTotalValue) * 100
+    epfAllocation.percentage = (epfAllocation.current_value / finalTotalValue) * 100
+    usStocksAllocation.percentage = (usStocksAllocation.current_value / finalTotalValue) * 100
+    liquidAllocation.percentage = (liquidAllocation.current_value / finalTotalValue) * 100
+    unlistedSharesAllocation.percentage = (unlistedSharesAllocation.current_value / finalTotalValue) * 100
+    otherAssetsAllocation.percentage = (otherAssetsAllocation.current_value / finalTotalValue) * 100
   }
 
   // Get top performers
@@ -183,7 +332,7 @@ export function DashboardPage() {
         />
         <MetricCard
           title="Current Value"
-          value={formatCurrency(totalValue)}
+          value={formatCurrency(finalTotalValue)}
           icon={Wallet}
         />
         <MetricCard
@@ -201,7 +350,7 @@ export function DashboardPage() {
       </div>
 
       {/* Asset Type Breakdown */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Mutual Funds</CardTitle>
@@ -348,6 +497,24 @@ export function DashboardPage() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Unlisted Shares</CardTitle>
+            <Building2 className="h-4 w-4 text-amber-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{formatCurrency(unlistedSharesAllocation.current_value)}</div>
+            <p className="text-xs text-muted-foreground">
+              {formatPercentage(unlistedSharesAllocation.percentage)} of portfolio
+            </p>
+            <p className={`text-xs mt-1 ${
+              (unlistedSharesAllocation.current_value - unlistedSharesAllocation.invested) >= 0 ? 'text-green-600' : 'text-red-600'
+            }`}>
+              {formatCurrency(unlistedSharesAllocation.current_value - unlistedSharesAllocation.invested)} gain
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Liquid</CardTitle>
             <Wallet className="h-4 w-4 text-cyan-600" />
           </CardHeader>
@@ -361,7 +528,91 @@ export function DashboardPage() {
             </p>
           </CardContent>
         </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Other Assets</CardTitle>
+            <Package className="h-4 w-4 text-slate-600" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{formatCurrency(otherAssetsAllocation.current_value)}</div>
+            <p className="text-xs text-muted-foreground">
+              {formatPercentage(otherAssetsAllocation.percentage)} of portfolio
+            </p>
+            <p className={`text-xs mt-1 ${
+              (otherAssetsAllocation.current_value - otherAssetsAllocation.invested) >= 0 ? 'text-green-600' : 'text-red-600'
+            }`}>
+              {formatCurrency(otherAssetsAllocation.current_value - otherAssetsAllocation.invested)} gain
+            </p>
+          </CardContent>
+        </Card>
       </div>
+
+      {/* Insurance Policies Section (Payouts - Not included in Current Value) */}
+      {insuranceAllocation.count > 0 && (
+        <Card className="border-2 border-amber-200 bg-amber-50/50">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Shield className="h-5 w-5 text-amber-600" />
+              Insurance Policies (Payouts)
+            </CardTitle>
+            <CardDescription>
+              These are payout policies and are not included in Current Value calculation
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4 md:grid-cols-4">
+              <div>
+                <p className="text-sm text-muted-foreground">Total Policies</p>
+                <p className="text-2xl font-bold">{insuranceAllocation.count}</p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Total Sum Assured</p>
+                <p className="text-2xl font-bold">{formatCurrency(insuranceAllocation.sum_assured)}</p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Annual Premium</p>
+                <p className="text-2xl font-bold">{formatCurrency(insuranceAllocation.annual_premium)}</p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Total Premium Paid</p>
+                <p className="text-2xl font-bold">{formatCurrency(insuranceAllocation.premium)}</p>
+              </div>
+            </div>
+            {insuranceLoading ? (
+              <Skeleton className="h-32 mt-4" />
+            ) : (
+              <div className="mt-4 space-y-2">
+                {insuranceHoldings?.slice(0, 5).map((policy: any) => (
+                  <div key={policy.id} className="flex items-center justify-between p-2 bg-white rounded border">
+                    <div className="flex-1">
+                      <p className="font-medium">{policy.name}</p>
+                      {policy.policy_number && (
+                        <p className="text-sm text-muted-foreground">Policy: {policy.policy_number}</p>
+                      )}
+                      {policy.policy_type && (
+                        <p className="text-xs text-muted-foreground">Type: {policy.policy_type}</p>
+                      )}
+                    </div>
+                    <div className="text-right">
+                      {policy.sum_assured_value > 0 && (
+                        <p className="font-semibold">{formatCurrency(policy.sum_assured_value)}</p>
+                      )}
+                      <p className="text-sm text-muted-foreground">Annual: {formatCurrency(policy.annual_premium || 0)}</p>
+                      <p className="text-xs text-muted-foreground">Paid: {formatCurrency(policy.invested_amount || 0)}</p>
+                    </div>
+                  </div>
+                ))}
+                {insuranceHoldings && insuranceHoldings.length > 5 && (
+                  <p className="text-sm text-muted-foreground text-center">
+                    + {insuranceHoldings.length - 5} more policies
+                  </p>
+                )}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       {/* Charts */}
       <div className="grid gap-4 md:grid-cols-2">
