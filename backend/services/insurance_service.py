@@ -363,7 +363,8 @@ class InsuranceService:
             
             logger.info(f"Loaded JSON data with keys: {data.keys()}")
             
-            policies = data.get("insurance_policies", [])
+            # Support both insurance_policies and health_insurance_policies keys
+            policies = data.get("insurance_policies", []) or data.get("health_insurance_policies", [])
             logger.info(f"Found {len(policies)} insurance policies in JSON")
             
             if not policies:

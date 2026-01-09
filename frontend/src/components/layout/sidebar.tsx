@@ -16,7 +16,8 @@ import {
   LineChart,
   Globe,
   Shield,
-  Package
+  Package,
+  Heart
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuth } from '@/contexts/auth-context'
@@ -38,6 +39,7 @@ const navigation = [
   { name: 'Unlisted Shares', href: '/unlisted-shares', icon: Building2 },
   { name: 'Liquid', href: '/liquid', icon: Wallet },
   { name: 'Insurance', href: '/insurance', icon: Shield },
+  { name: 'Health Insurance', href: '/health-insurance', icon: Heart },
   { name: 'Other Assets', href: '/other-assets', icon: Package },
   { name: 'Data Validation', href: '/data-validation', icon: CheckSquare },
   { name: 'Assets', href: '/assets', icon: Settings },

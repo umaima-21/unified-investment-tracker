@@ -20,6 +20,7 @@ import { USStocksPage } from '@/pages/us-stocks'
 import { UnlistedSharesPage } from '@/pages/unlisted-shares'
 import { LiquidPage } from '@/pages/liquid'
 import { InsurancePage } from '@/pages/insurance'
+import { HealthInsurancePage } from '@/pages/health-insurance'
 import { OtherAssetsPage } from '@/pages/other-assets'
 import { AssetsPage } from '@/pages/assets'
 import { DematAccountsPage } from '@/pages/demat-accounts'
@@ -115,7 +116,7 @@ function AppRoutes() {
         if (data.success && data.policies_imported > 0) {
           toast({
             title: 'Insurance Data Loaded',
-            description: `Successfully imported ${data.policies_imported} insurance policies`,
+            description: `Successfully imported ${data.policies_imported} insurance policy/policies (including health insurance)`,
           })
         
           // Mark as imported
@@ -336,6 +337,18 @@ function AppRoutes() {
             <ErrorBoundary>
               <MainLayout>
                 <InsurancePage />
+              </MainLayout>
+            </ErrorBoundary>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/health-insurance"
+        element={
+          <ProtectedRoute>
+            <ErrorBoundary>
+              <MainLayout>
+                <HealthInsurancePage />
               </MainLayout>
             </ErrorBoundary>
           </ProtectedRoute>

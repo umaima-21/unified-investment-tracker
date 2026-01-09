@@ -2,7 +2,7 @@ import { usePortfolioSummary, usePortfolioHistory, usePortfolioAllocation } from
 import { useHoldings } from '@/hooks/use-holdings'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { formatCurrency, formatPercentage } from '@/lib/utils'
-import { TrendingUp, TrendingDown, Wallet, DollarSign, PieChart, BarChart3, Activity, Landmark, Building2, LineChart, Globe, Shield, Package } from 'lucide-react'
+import { TrendingUp, TrendingDown, Wallet, DollarSign, PieChart, BarChart3, Activity, Landmark, Building2, LineChart, Globe, Shield, Package, Heart } from 'lucide-react'
 import { PortfolioChart } from '@/components/dashboard/portfolio-chart'
 import { AllocationChart } from '@/components/dashboard/allocation-chart'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -207,7 +207,23 @@ export function DashboardPage() {
   }, { current_value: 0, invested: 0, percentage: 0 })
   
   // Insurance Policies (payouts - NOT included in Current Value)
-  const insuranceAllocation = (insuranceHoldings || []).reduce((acc: any, policy: any) => {
+  // Separate regular insurance from health insurance
+  const regularInsuranceHoldings = (insuranceHoldings || []).filter((policy: any) => 
+    policy.policy_type !== 'Health Insurance'
+  )
+  const healthInsuranceHoldings = (insuranceHoldings || []).filter((policy: any) => 
+    policy.policy_type === 'Health Insurance'
+  )
+  
+  const insuranceAllocation = regularInsuranceHoldings.reduce((acc: any, policy: any) => {
+    acc.sum_assured += policy.sum_assured_value || 0
+    acc.premium += policy.invested_amount || 0
+    acc.annual_premium += policy.annual_premium || 0
+    acc.count += 1
+    return acc
+  }, { sum_assured: 0, premium: 0, annual_premium: 0, count: 0 })
+  
+  const healthInsuranceAllocation = healthInsuranceHoldings.reduce((acc: any, policy: any) => {
     acc.sum_assured += policy.sum_assured_value || 0
     acc.premium += policy.invested_amount || 0
     acc.annual_premium += policy.annual_premium || 0
@@ -583,7 +599,7 @@ export function DashboardPage() {
               <Skeleton className="h-32 mt-4" />
             ) : (
               <div className="mt-4 space-y-2">
-                {insuranceHoldings?.slice(0, 5).map((policy: any) => (
+                {regularInsuranceHoldings?.slice(0, 5).map((policy: any) => (
                   <div key={policy.id} className="flex items-center justify-between p-2 bg-white rounded border">
                     <div className="flex-1">
                       <p className="font-medium">{policy.name}</p>
@@ -603,9 +619,75 @@ export function DashboardPage() {
                     </div>
                   </div>
                 ))}
-                {insuranceHoldings && insuranceHoldings.length > 5 && (
+                {regularInsuranceHoldings && regularInsuranceHoldings.length > 5 && (
                   <p className="text-sm text-muted-foreground text-center">
-                    + {insuranceHoldings.length - 5} more policies
+                    + {regularInsuranceHoldings.length - 5} more policies
+                  </p>
+                )}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Health Insurance Policies Section (Payouts - Not included in Current Value) */}
+      {healthInsuranceAllocation.count > 0 && (
+        <Card className="border-2 border-red-200 bg-red-50/50">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Heart className="h-5 w-5 text-red-600" />
+              Health Insurance Policies (Payouts)
+            </CardTitle>
+            <CardDescription>
+              These are health insurance policies and are not included in Current Value calculation
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4 md:grid-cols-4">
+              <div>
+                <p className="text-sm text-muted-foreground">Total Policies</p>
+                <p className="text-2xl font-bold">{healthInsuranceAllocation.count}</p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Total Sum Insured</p>
+                <p className="text-2xl font-bold">{formatCurrency(healthInsuranceAllocation.sum_assured)}</p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Annual Premium</p>
+                <p className="text-2xl font-bold">{formatCurrency(healthInsuranceAllocation.annual_premium)}</p>
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Total Premium Paid</p>
+                <p className="text-2xl font-bold">{formatCurrency(healthInsuranceAllocation.premium)}</p>
+              </div>
+            </div>
+            {insuranceLoading ? (
+              <Skeleton className="h-32 mt-4" />
+            ) : (
+              <div className="mt-4 space-y-2">
+                {healthInsuranceHoldings?.slice(0, 5).map((policy: any) => (
+                  <div key={policy.id} className="flex items-center justify-between p-2 bg-white rounded border">
+                    <div className="flex-1">
+                      <p className="font-medium">{policy.name}</p>
+                      {policy.policy_number && (
+                        <p className="text-sm text-muted-foreground">Policy: {policy.policy_number}</p>
+                      )}
+                      {policy.policy_type && (
+                        <p className="text-xs text-muted-foreground">Type: {policy.policy_type}</p>
+                      )}
+                    </div>
+                    <div className="text-right">
+                      {policy.sum_assured_value > 0 && (
+                        <p className="font-semibold text-red-600">{formatCurrency(policy.sum_assured_value)}</p>
+                      )}
+                      <p className="text-sm text-muted-foreground">Annual: {formatCurrency(policy.annual_premium || 0)}</p>
+                      <p className="text-xs text-muted-foreground">Paid: {formatCurrency(policy.invested_amount || 0)}</p>
+                    </div>
+                  </div>
+                ))}
+                {healthInsuranceHoldings && healthInsuranceHoldings.length > 5 && (
+                  <p className="text-sm text-muted-foreground text-center">
+                    + {healthInsuranceHoldings.length - 5} more policies
                   </p>
                 )}
               </div>

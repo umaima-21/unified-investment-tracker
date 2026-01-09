@@ -151,18 +151,41 @@ async def clear_all_insurance(db: Session = Depends(get_db)):
 @router.post("/auto-import-json")
 async def auto_import_insurance_json(db: Session = Depends(get_db)):
     """
-    Automatically import insurance data from the data/insurance.json file.
+    Automatically import insurance data from the data/insurance.json and data/health_insurance.json files.
     This endpoint is called on app initialization to load existing data.
     """
     try:
         service = InsuranceService(db)
-        result = service.import_from_json()
+        total_imported = 0
+        total_skipped = 0
+        messages = []
+        
+        # Import regular insurance policies
+        result1 = service.import_from_json()
+        if result1.get('status') == 'success':
+            total_imported += result1.get('imported_count', 0)
+            total_skipped += result1.get('skipped_count', 0)
+            if result1.get('imported_count', 0) > 0 or result1.get('skipped_count', 0) > 0:
+                messages.append(f"Insurance: {result1.get('message', '')}")
+        
+        # Import health insurance policies
+        project_root = Path(__file__).parent.parent.parent.parent
+        health_insurance_path = project_root / "data" / "health_insurance.json"
+        if health_insurance_path.exists():
+            result2 = service.import_from_json(str(health_insurance_path))
+            if result2.get('status') == 'success':
+                total_imported += result2.get('imported_count', 0)
+                total_skipped += result2.get('skipped_count', 0)
+                if result2.get('imported_count', 0) > 0 or result2.get('skipped_count', 0) > 0:
+                    messages.append(f"Health Insurance: {result2.get('message', '')}")
+        
+        combined_message = "; ".join(messages) if messages else "No new policies to import"
         
         return {
-            'success': result.get('status') == 'success',
-            'message': result.get('message', ''),
-            'policies_imported': result.get('imported_count', 0),
-            'skipped': result.get('skipped_count', 0)
+            'success': True,
+            'message': combined_message,
+            'policies_imported': total_imported,
+            'skipped': total_skipped
         }
         
     except Exception as e:

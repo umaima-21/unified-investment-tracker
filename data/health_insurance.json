@@ -1,0 +1,21 @@
+{
+  "health_insurance_policies": [
+    {
+      "policy_number": "100006410800",
+      "name": "ICICI Lombard Elevate - Health Insurance",
+      "description": "ICICI Lombard Elevate Health Insurance Policy - Floater plan covering Umaima Huseini Surti, Sarah Huseini Surti, and Saniya Huseini Surti. Zone A. Sum Insured: ₹10,00,000. Includes add-ons: Room Modifier, Health Check-up, Claim Protector, Tele Consultation, 2-Hour Hospitalization.",
+      "premium": 24069.00,
+      "premium_frequency": "yearly",
+      "annual_premium": 24069.00,
+      "sum_assured": 1000000.00,
+      "amount_on_maturity": null,
+      "date_of_investment": "2025-05-28",
+      "date_of_maturity": "2026-05-27",
+      "duration_years": 1,
+      "type": "Health Insurance",
+      "nominee": "Zainab (Mother)",
+      "comments": "Product: ELEVATE | Policy Type: FLOATER | Zone: Zone A | Basic Premium: ₹20,397.48 | Tax: ₹3,671.56 | Insured Members: Umaima Huseini Surti (Self, DOB: 1981-10-21), Sarah Huseini Surti (Daughter, DOB: 2012-05-30), Saniya Huseini Surti (Daughter, DOB: 2014-02-11) | Pre-existing Disease: No | Waiting Periods: PED 3 Years, Specific Diseases 2 Years, Initial 30 Days, Critical Illness 90 Days, Maternity 2 Years"
+    }
+  ]
+}
+
